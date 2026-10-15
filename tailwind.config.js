@@ -1,0 +1,106 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: "#E6F4FE",
+          100: "#CCE7FD",
+          200: "#99CFFB",
+          300: "#66B7F9",
+          400: "#339FF7",
+          500: "#1E88E5",
+          600: "#166CB8",
+          700: "#0F508A",
+          800: "#07345B",
+          900: "#02182D",
+          DEFAULT: "#1E88E5",
+        },
+        accent: {
+          50: "#FFF4E6",
+          100: "#FFE4C2",
+          200: "#FFC985",
+          300: "#FFAE47",
+          400: "#FF931A",
+          500: "#F97316",
+          600: "#D45A0A",
+          700: "#9F4207",
+          DEFAULT: "#F97316",
+        },
+        // Exact colors sampled from the trust logo (Clogo.png)
+        logoBlue: {
+          50: "#E7F6FD",
+          100: "#C5EAFA",
+          200: "#8DD6F4",
+          300: "#55C1EE",
+          400: "#28A9E3",
+          500: "#0A9BD8",
+          600: "#087CB0",
+          700: "#066087",
+          800: "#044A68",
+          900: "#03334A",
+          DEFAULT: "#0A9BD8",
+        },
+        logoGreen: {
+          50: "#EBF6EB",
+          100: "#D2ECD3",
+          200: "#A6D9A8",
+          300: "#79C57C",
+          400: "#5AAF5E",
+          500: "#3E9C42",
+          600: "#318036",
+          700: "#246428",
+          800: "#19501C",
+          900: "#0F3811",
+          DEFAULT: "#3E9C42",
+        },
+        logoOrange: {
+          50: "#FFF8E9",
+          100: "#FFEDC4",
+          200: "#FEDC8A",
+          300: "#FCCA4E",
+          400: "#F8B82B",
+          500: "#F5A623",
+          600: "#D98A12",
+          700: "#B06C0C",
+          800: "#855109",
+          900: "#5E3A07",
+          DEFAULT: "#F5A623",
+        },
+        ink: {
+          900: "#0F172A",
+          700: "#334155",
+          500: "#64748B",
+          300: "#CBD5E1",
+        },
+        cream: "#FFF9F0",
+      },
+      maxWidth: {
+        "7xl": "1600px",
+      },
+      fontFamily: {
+        sans: ['"Inter"', '"Segoe UI"', "system-ui", "sans-serif"],
+        display: ['"Plus Jakarta Sans"', '"Inter"', "system-ui", "sans-serif"],
+      },
+      boxShadow: {
+        soft: "0 6px 24px -8px rgba(30, 136, 229, 0.25)",
+        glow: "0 10px 40px -10px rgba(30, 136, 229, 0.45)",
+        card: "0 12px 32px -16px rgba(15, 23, 42, 0.18)",
+      },
+      animation: {
+        "fade-up": "fadeUp 0.8s ease-out forwards",
+      },
+      keyframes: {
+        fadeUp: {
+          "0%": { opacity: 0, transform: "translateY(24px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+      },
+    },
+  },
+  plugins: [],
+}
