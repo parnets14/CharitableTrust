@@ -9,30 +9,32 @@ import {
   ArrowRight,
 } from "lucide-react";
 import contactBanner from "../assets/Contactus Banner.webp";
+import { TRUST_LOCATION, TRUST_EMAILS, TRUST_PHONES } from "../data/site";
 
 const contactCards = [
   {
     icon: Phone,
     title: "Phone",
-    primary: "+91 98765 43210",
-    secondary: "+91 80 2345 6789",
-    href: "tel:+919876543210",
+    primary: TRUST_PHONES.primary.display,
+    href: TRUST_PHONES.primary.tel,
     tone: "from-primary-500 to-primary-600",
   },
   {
     icon: Mail,
     title: "Email",
-    primary: "info@mkctrust.org",
-    secondary: "donate@mkctrust.org",
-    href: "mailto:info@mkctrust.org",
+    emails: [
+      { address: TRUST_EMAILS.office, label: "Office" },
+      { address: TRUST_EMAILS.helpline, label: "Helpline" },
+    ],
     tone: "from-accent-400 to-accent-500",
   },
   {
     icon: MapPin,
     title: "Office",
-    primary: "Bengaluru, Karnataka",
-    secondary: "India — 560001",
-    href: "#map",
+    primary: TRUST_LOCATION.shortPrimary,
+    secondary: TRUST_LOCATION.shortSecondary,
+    href: TRUST_LOCATION.mapsUrl,
+    external: true,
     tone: "from-emerald-500 to-emerald-600",
   },
   {
@@ -101,7 +103,10 @@ export default function Contact() {
                 {contactCards.map((c) => {
                   const isLink =
                     typeof c.href === "string" &&
-                    (c.href.startsWith("tel:") || c.href.startsWith("mailto:"));
+                    (c.href.startsWith("tel:") ||
+                      c.href.startsWith("mailto:") ||
+                      c.href.startsWith("http"));
+                  const isExternal = isLink && c.href.startsWith("http");
                   const inner = (
                     <>
                       <span
@@ -113,12 +118,33 @@ export default function Contact() {
                         <p className="text-[11px] font-bold uppercase tracking-wider text-ink-500">
                           {c.title}
                         </p>
-                        <p className="mt-0.5 font-bold text-ink-900 truncate">
-                          {c.primary}
-                        </p>
-                        <p className="text-xs text-ink-700 truncate">
-                          {c.secondary}
-                        </p>
+                        {c.emails ? (
+                          <div className="mt-1 space-y-1">
+                            {c.emails.map((e) => (
+                              <a
+                                key={e.address}
+                                href={`mailto:${e.address}`}
+                                className="flex items-center gap-2 text-sm font-bold text-ink-900 hover:text-primary-600 transition-colors"
+                              >
+                                <span className="truncate">{e.address}</span>
+                                <span className="shrink-0 rounded-md bg-primary-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-600">
+                                  {e.label}
+                                </span>
+                              </a>
+                            ))}
+                          </div>
+                        ) : (
+                          <>
+                            <p className="mt-0.5 font-bold text-ink-900 truncate">
+                              {c.primary}
+                            </p>
+                            {c.secondary && (
+                              <p className="text-xs text-ink-700 truncate">
+                                {c.secondary}
+                              </p>
+                            )}
+                          </>
+                        )}
                       </div>
                     </>
                   );
@@ -127,6 +153,12 @@ export default function Contact() {
                       {isLink ? (
                         <a
                           href={c.href}
+                          {...(isExternal
+                            ? {
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                              }
+                            : {})}
                           className="group flex items-center gap-4 px-6 sm:px-8 py-3.5 w-full hover:bg-primary-50/40 transition-colors"
                         >
                           {inner}
@@ -238,8 +270,8 @@ export default function Contact() {
             <p className="section-eyebrow">Find us</p>
             <h2 className="section-title">Our Location</h2>
             <p className="mt-4 text-ink-700 max-w-2xl mx-auto">
-              Visit our office in Bengaluru — we're always happy to welcome
-              supporters, volunteers and families in person.
+              Visit our office in Anekal, Bengaluru — we're always happy to
+              welcome supporters, volunteers and families in person.
             </p>
           </div>
 
@@ -250,10 +282,18 @@ export default function Contact() {
                 <MapPin className="h-7 w-7" />
               </div>
               <h3 className="font-display text-2xl font-bold leading-tight">
-                Nadaprabhu Kempegowda Educational & Charitable Trust
+                {TRUST_LOCATION.name}
               </h3>
-              <p className="mt-4 text-white/90 leading-relaxed">
-                Bengaluru, Karnataka, India — 560001
+              <address className="mt-4 not-italic text-white/90 leading-relaxed">
+                {TRUST_LOCATION.addressLines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </address>
+              <p className="mt-3 inline-flex w-fit items-center gap-2 rounded-lg bg-white/15 px-3 py-1.5 text-xs font-semibold tracking-wide text-white/90">
+                <MapPin className="h-3.5 w-3.5" />
+                {TRUST_LOCATION.coordsLabel}
               </p>
 
               <div className="mt-8 space-y-4 border-t border-white/25 pt-8">
@@ -262,7 +302,7 @@ export default function Contact() {
                   <div>
                     <p className="font-bold">Office Hours</p>
                     <p className="text-sm text-white/80">
-                      Monday – Saturday · 9:00 AM – 6:00 PM IST
+                      {TRUST_LOCATION.hours}
                     </p>
                   </div>
                 </div>
@@ -270,30 +310,59 @@ export default function Contact() {
                   <Phone className="h-5 w-5 text-white/80 shrink-0 mt-0.5" />
                   <div>
                     <p className="font-bold">Call us</p>
-                    <p className="text-sm text-white/80">
-                      +91 98765 43210
-                    </p>
+                    <a
+                      href={TRUST_PHONES.primary.tel}
+                      className="block text-sm text-white/80 hover:text-white hover:underline transition-colors"
+                    >
+                      {TRUST_PHONES.primary.display}
+                    </a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Mail className="h-5 w-5 text-white/80 shrink-0 mt-0.5" />
+                  <div className="min-w-0">
+                    <p className="font-bold">Email us</p>
+                    <a
+                      href={`mailto:${TRUST_EMAILS.office}`}
+                      className="block truncate text-sm text-white/80 hover:text-white hover:underline transition-colors"
+                    >
+                      {TRUST_EMAILS.office}
+                    </a>
+                    <a
+                      href={`mailto:${TRUST_EMAILS.helpline}`}
+                      className="block truncate text-sm text-white/80 hover:text-white hover:underline transition-colors"
+                    >
+                      {TRUST_EMAILS.helpline}
+                    </a>
                   </div>
                 </div>
               </div>
 
-              <a
-                href="https://maps.google.com/?q=Bengaluru"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto pt-8"
-              >
-                <span className="inline-flex items-center gap-2 rounded-xl bg-white text-logoBlue-600 font-bold px-5 py-3 hover:bg-logoBlue-50 transition-colors">
-                  Open in Google Maps <ArrowRight className="h-4 w-4" />
-                </span>
-              </a>
+              <div className="mt-auto flex flex-wrap items-center gap-3 pt-8">
+                <a
+                  href={TRUST_LOCATION.directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl bg-white text-logoBlue-600 font-bold px-5 py-3 hover:bg-logoBlue-50 transition-colors"
+                >
+                  Get directions <ArrowRight className="h-4 w-4" />
+                </a>
+                <a
+                  href={TRUST_LOCATION.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl bg-white/10 ring-1 ring-white/30 text-white font-bold px-5 py-3 hover:bg-white/20 transition-colors"
+                >
+                  <MapPin className="h-4 w-4" /> Open in Google Maps
+                </a>
+              </div>
             </div>
 
             {/* Map — RIGHT */}
             <div className="rounded-3xl overflow-hidden shadow-card ring-1 ring-ink-300/40 min-h-[380px] lg:min-h-[500px]">
               <iframe
-                title="Office location"
-                src="https://www.google.com/maps?q=Bengaluru,+Karnataka,+India&output=embed"
+                title={`Map showing ${TRUST_LOCATION.name}`}
+                src={TRUST_LOCATION.embedUrl}
                 className="h-full w-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

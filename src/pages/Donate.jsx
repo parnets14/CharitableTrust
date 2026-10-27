@@ -25,7 +25,7 @@ import heroImage from "../assets/Image1.webp";
 import healthCampsImage from "../assets/image 1.webp";
 import familyStoryImage from "../assets/image3.webp";
 import moneyGoesImage from "../assets/photos 1.webp";
-import { IMPACT_STATS } from "../data/site";
+import { IMPACT_STATS, TRUST_EMAILS, TRUST_PHONES } from "../data/site";
 
 const bankDetails = [
   { label: "Account Name", value: "Nadaprabhu Kempegowda Educational & Charitable Trust" },
@@ -651,10 +651,10 @@ export default function Donate() {
                 <p className="mt-5 text-xs text-ink-700 leading-relaxed">
                   After paying, share the screenshot on{" "}
                   <a
-                    href="mailto:donate@mkctrust.org"
+                    href={`mailto:${TRUST_EMAILS.office}`}
                     className="font-bold text-accent-600 hover:underline"
                   >
-                    donate@mkctrust.org
+                    {TRUST_EMAILS.office}
                   </a>{" "}
                   and we'll email you a thank-you note + official receipt.
                 </p>
@@ -785,7 +785,7 @@ export default function Donate() {
 
                 <div className="mt-6 grid sm:grid-cols-2 gap-3">
                   <a
-                    href="tel:+919876543210"
+                    href={TRUST_PHONES.primary.tel}
                     className="flex items-center gap-3 rounded-2xl bg-white/10 hover:bg-white/15 backdrop-blur p-4 transition-colors"
                   >
                     <div className="h-11 w-11 rounded-xl bg-accent-500 grid place-items-center shrink-0">
@@ -795,13 +795,12 @@ export default function Donate() {
                       <p className="text-[10px] uppercase tracking-wider text-primary-200">
                         Call us
                       </p>
-                      <p className="font-bold truncate">+91 98765 43210</p>
+                      <p className="font-bold truncate">
+                        {TRUST_PHONES.primary.display}
+                      </p>
                     </div>
                   </a>
-                  <a
-                    href="mailto:donate@mkctrust.org"
-                    className="flex items-center gap-3 rounded-2xl bg-white/10 hover:bg-white/15 backdrop-blur p-4 transition-colors"
-                  >
+                  <div className="flex items-center gap-3 rounded-2xl bg-white/10 backdrop-blur p-4">
                     <div className="h-11 w-11 rounded-xl bg-accent-500 grid place-items-center shrink-0">
                       <Mail className="h-5 w-5" />
                     </div>
@@ -809,9 +808,20 @@ export default function Donate() {
                       <p className="text-[10px] uppercase tracking-wider text-primary-200">
                         Email us
                       </p>
-                      <p className="font-bold truncate">donate@mkctrust.org</p>
+                      <a
+                        href={`mailto:${TRUST_EMAILS.office}`}
+                        className="block font-bold truncate hover:underline"
+                      >
+                        {TRUST_EMAILS.office}
+                      </a>
+                      <a
+                        href={`mailto:${TRUST_EMAILS.helpline}`}
+                        className="block text-xs text-primary-100/80 truncate hover:text-white hover:underline transition-colors"
+                      >
+                        {TRUST_EMAILS.helpline}
+                      </a>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>

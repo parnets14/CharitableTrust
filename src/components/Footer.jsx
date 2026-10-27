@@ -18,6 +18,7 @@ import {
   YoutubeIcon,
 } from "./BrandIcons";
 import logo from "../assets/Clogo.png";
+import { TRUST_LOCATION, TRUST_EMAILS, TRUST_PHONES } from "../data/site";
 
 const quickLinks = [
   { label: "Home", to: "/", icon: HomeIcon },
@@ -34,9 +35,27 @@ const programs = [
 ];
 
 const contacts = [
-  { icon: Phone, label: "+91 98765 43210", href: "tel:+919876543210" },
-  { icon: Mail, label: "info@mkctrust.org", href: "mailto:info@mkctrust.org" },
-  { icon: MapPin, label: "Bengaluru, Karnataka, India" },
+  {
+    icon: Phone,
+    label: TRUST_PHONES.primary.display,
+    href: TRUST_PHONES.primary.tel,
+  },
+  {
+    icon: Mail,
+    label: TRUST_EMAILS.office,
+    href: `mailto:${TRUST_EMAILS.office}`,
+  },
+  {
+    icon: Mail,
+    label: TRUST_EMAILS.helpline,
+    href: `mailto:${TRUST_EMAILS.helpline}`,
+  },
+  {
+    icon: MapPin,
+    label: "Anekal, Bengaluru 560083",
+    href: TRUST_LOCATION.mapsUrl,
+    external: true,
+  },
 ];
 
 export default function Footer() {
@@ -151,7 +170,18 @@ export default function Footer() {
                 );
                 return (
                   <li key={c.label}>
-                    {c.href ? <a href={c.href}>{content}</a> : content}
+                    {c.href ? (
+                      <a
+                        href={c.href}
+                        {...(c.external
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      content
+                    )}
                   </li>
                 );
               })}

@@ -23,7 +23,7 @@ import activityP1 from "../assets/Home/P1.webp";
 import activityP2 from "../assets/Home/p2.webp";
 import activityP3 from "../assets/Home/p3.webp";
 import activityP4 from "../assets/Home/p4.webp";
-import { IMPACT_STATS } from "../data/site";
+import { IMPACT_STATS, TRUST_EMAILS } from "../data/site";
 
 const services = [
   {
@@ -551,6 +551,19 @@ export default function Home() {
               <Link to="/contact" className="btn-primary mt-8">
                 Get in Touch <ArrowRight className="h-4 w-4" />
               </Link>
+
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
+                {[TRUST_EMAILS.office, TRUST_EMAILS.helpline].map((email) => (
+                  <a
+                    key={email}
+                    href={`mailto:${email}`}
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-ink-800 ring-1 ring-ink-300/50 hover:text-logoBlue-700 hover:ring-logoBlue-400 transition-colors"
+                  >
+                    <Mail className="h-4 w-4 text-logoBlue-600" />
+                    {email}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
